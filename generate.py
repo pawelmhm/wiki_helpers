@@ -24,7 +24,7 @@ def main():
     output = "{{" + output + "}}"
     print(output)
     rest = Template("""
-'''{{name}}'' (ur. {{urodz}} w {{where}}, zm. {{dead}}) - {{opis}}
+'''{{name}}''' (ur. {{urodz}} w {{where}}, zm. {{dead}}) - {{opis}}
 == Przypisy ==""")
     opis = input('opis ')
 
