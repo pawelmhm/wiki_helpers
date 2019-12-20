@@ -18,9 +18,10 @@ def main(filename):
                 surname, name = a.split(",", 1)
             e['name'] = name
             e['surname'] = surname
-            e['znaczenie'] = e['custom1']
-            e['pismo'] = e['secondary_title']
-            e['title'] = html.unescape(e['title'])
+            e['znaczenie'] = e.get('custom1')
+            e['czasopismo'] = e.get('journal_name')
+            title = e.get('title', e.get('primary_title'))
+            e['title'] = title
 
             print("{{" + pystache.render(template, e) + "}}")
 
