@@ -19,7 +19,7 @@ def main(filename):
             e['name'] = name
             e['surname'] = surname
             e['znaczenie'] = e.get('custom1')
-            e['czasopismo'] = e.get('journal_name')
+            e['pismo'] = e.get('secondary_name', e.get('journal_name'))
             title = e.get('title', e.get('primary_title'))
             e['title'] = title
 
