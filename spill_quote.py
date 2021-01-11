@@ -3,6 +3,7 @@ import datetime
 import json
 
 import click
+import html
 import extruct
 import pystache
 import requests
@@ -14,7 +15,8 @@ def parse_ld(data):
     print(jl_jd)
     dd = {}
     dd['url'] = jl_jd.get("url", "")
-    dd['title'] = jl_jd["headline"]
+    dd['title'] = html.unescape(jl_jd["headline"])
+
     dd['data'] = jl_jd["datePublished"][:10]
     author = jl_jd["author"]
     if not isinstance(author, list):
