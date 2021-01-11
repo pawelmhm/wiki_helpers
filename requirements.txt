@@ -1,0 +1,4 @@
+extruct==0.12.0
+pystache==0.5.4
+RISparser==0.4.3
+nameparser==1.0.6
