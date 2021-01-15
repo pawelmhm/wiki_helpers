@@ -23,7 +23,10 @@ def parse_ld(data):
         author = [author]
 
     for i, au in enumerate(author, 1):
-        aut = au["name"]
+        if isinstance(au, dict):
+            aut = au["name"]
+        else:
+            aut = au
         name = HumanName(aut)
         if i == 1:
             dd['name'] = name.first
@@ -49,9 +52,8 @@ def main(url):
 
     headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
     res = requests.get(url, headers=headers)
-    print(res)
     data = extruct.extract(res.text, res.url)
-    # print(json.dumps(data))
+    print(json.dumps(data))
     # return
     dd = {}
 
