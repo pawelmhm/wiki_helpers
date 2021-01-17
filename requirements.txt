@@ -2,3 +2,6 @@ extruct==0.12.0
 pystache==0.5.4
 RISparser==0.4.3
 nameparser==1.0.6
+jupyter==1.0.0
+matplotlib==3.3.3
+pandas==1.2.0
