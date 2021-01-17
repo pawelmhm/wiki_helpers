@@ -15,7 +15,7 @@ def parse_ld(data):
     print(jl_jd)
     dd = {}
     dd['url'] = jl_jd.get("url", "")
-    dd['title'] = html.unescape(jl_jd["headline"])
+    dd['title'] = html.unescape(jl_jd.get("headline", ""))
 
     dd['data'] = jl_jd["datePublished"][:10]
     author = jl_jd["author"]
@@ -40,6 +40,16 @@ def parse_ld(data):
     dd['pismo'] = pismo
     return dd
 
+def parse_micro(data):
+    micr = data['microdata']
+    art = [a for a in micr if "Article" in a.get('type')]
+    if not art:
+        return
+    art = art[0]['properties']
+    dd = {}
+    dd['title'] = art['headline']
+    return dd
+
 
 @click.command()
 @click.argument('url')
@@ -57,6 +67,8 @@ def main(url):
 
     if 'json-ld' in data and len(data.get('json-ld', [])) != 0:
         dd = parse_ld(data)
+    elif 'microdata' in data:
+        dd = parse_micro(data)
 
     dzisiaj = datetime.datetime.now().isoformat()[:10]
     dd['data_d'] = dzisiaj
