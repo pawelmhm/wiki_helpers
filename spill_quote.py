@@ -10,6 +10,15 @@ import requests
 from nameparser import HumanName
 
 
+def parse_openg(data):
+    og = dict(data['opengraph'][0]['properties'])
+    dd = {}
+    dd['url'] = og["og:url"]
+    dd['pismo'] = og["og:site_name"]
+    dd['title'] = og['og:title']
+    dd['data'] = og["article:published_time"]
+    return dd
+
 def parse_ld(data):
     jl_jd = data['json-ld'][0]
     print(jl_jd)
@@ -64,13 +73,15 @@ def main(url):
     res = requests.get(url, headers=headers)
     data = extruct.extract(res.text, res.url)
     print(json.dumps(data))
-    # return
     dd = {}
 
     if 'json-ld' in data and len(data.get('json-ld', [])) != 0:
         dd = parse_ld(data)
-    elif 'microdata' in data:
+    elif 'microdata' in data and len(data.get('microdata', [])) != 0:
+        raise
         dd = parse_micro(data)
+    elif "opengraph" in data:
+        dd = parse_openg(data)
 
     dzisiaj = datetime.datetime.now().isoformat()[:10]
     dd['data_d'] = dzisiaj
